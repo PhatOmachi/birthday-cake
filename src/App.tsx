@@ -77,10 +77,10 @@ function App() {
 
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [run, setRun] = useState(true);
+  const [run, setRun] = useState(false);
   const [shareMode, setShareMode] = useState(false);
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Nguyễn Hồng Liên");
   const nameRef = useRef<HTMLInputElement>(null);
 
   const visibility = shareMode || playing
@@ -214,6 +214,15 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    // Tự động bắt đầu sau một khoảng thời gian ngắn
+    const timer = setTimeout(() => {
+      start();
+    }, 1000); // Đợi 1 giây trước khi bắt đầu
+  
+    return () => clearTimeout(timer);
+  }, []); // Chỉ chạy một lần khi component được mount
+
   return (
     <div
       style={{
@@ -346,19 +355,6 @@ function App() {
           transform: "translateX(-50%)",
         }}
       >
-        <CakeActions
-          {...{
-            run,
-            start,
-            pause,
-            stop,
-            toggleLightCandle,
-            setRun,
-            playing,
-            paused,
-            candleVisible,
-          }}
-        />
       </div>
 
       {/* <div
